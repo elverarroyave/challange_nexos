@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public class User {
             joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID")
     )
-    private Set<Role> rolesOfUser;
+    private Set<Role> rolesOfUser = new HashSet<>();
 
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -46,4 +47,13 @@ public class User {
     )
     private List<Merchandise> merchandises;
 
+    public User(String name, int age, LocalDate entryDateToCompany) {
+        this.name = name;
+        this.age = age;
+        this.entryDateToCompany = entryDateToCompany;
+    }
+
+    public void addRole(Role roleToAdd){
+        this.rolesOfUser.add(roleToAdd);
+    }
 }
