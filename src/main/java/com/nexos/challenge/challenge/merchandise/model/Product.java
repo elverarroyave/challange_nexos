@@ -21,4 +21,12 @@ public class Product {
     @Column(name = "NAME")
     private String name;
 
+    @Column(name = "AMOUNT", nullable = false)
+    private int amount;
+
+    public Product(String name, int amount) {
+        this.name = name;
+        this.amount = amount;
+    }
+
 }

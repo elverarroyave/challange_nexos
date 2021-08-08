@@ -20,13 +20,19 @@ public class Merchandise {
     @Column(name = "MER_ID")
     private Long id;
 
-    @Column(name = "AMOUNT", nullable = false)
-    private int amount;
-
     @Column(name = "ADMISION_DATE", nullable = false)
     private LocalDate admisionDate;
+
+    @Column(name = "UPDATE_DATE")
+    private LocalDate updateDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
+
+    @OneToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "PRODUCT_ID")
+    private Product product;
 }

@@ -1,9 +1,9 @@
 package com.nexos.challenge.challenge.role.io.gateway;
 
+import com.nexos.challenge.challenge.config.exeption.NotFoundExeption;
 import com.nexos.challenge.challenge.role.io.repository.RoleRepository;
 import com.nexos.challenge.challenge.role.model.Role;
 import com.nexos.challenge.challenge.role.service.RoleGateway;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +19,8 @@ public class RoleGatewayImpl implements RoleGateway {
     }
 
     @Override
-    public Role findById(Long id) throws NotFoundException {
+    public Role findById(Long id){
         return roleRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Role id not found. Check your id please"));
+                .orElseThrow(() -> new NotFoundExeption("Role id not found. Check your id please"));
     }
 }
