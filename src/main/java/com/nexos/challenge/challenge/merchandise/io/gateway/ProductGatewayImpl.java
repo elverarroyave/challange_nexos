@@ -1,19 +1,26 @@
 package com.nexos.challenge.challenge.merchandise.io.gateway;
 
-import com.nexos.challenge.challenge.merchandise.io.repository.ProductRepositoy;
+import com.nexos.challenge.challenge.merchandise.io.repository.ProductRepository;
 import com.nexos.challenge.challenge.merchandise.model.Product;
 import com.nexos.challenge.challenge.merchandise.service.product.ProductGategay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public class ProductGategayImpl implements ProductGategay {
+public class ProductGatewayImpl implements ProductGategay {
 
     @Autowired
-    private ProductRepositoy productRepositoy;
+    private ProductRepository productRepository;
 
     @Override
     public Product create(Product productToCreate) {
-        return productRepositoy.save(productToCreate);
+        return productRepository.save(productToCreate);
+    }
+
+    @Override
+    public Optional<Product> findByName(String name) {
+        return productRepository.findByName(name);
     }
 }

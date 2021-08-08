@@ -4,8 +4,10 @@ import com.nexos.challenge.challenge.merchandise.service.marchendise.model.Merch
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.time.LocalDate;
+import java.util.Locale;
 
 @Data
 @AllArgsConstructor
@@ -25,7 +27,7 @@ public class MerchandiseRequest {
                 .amount(merchandiseRequest.getAmount())
                 .admisionDate(formatDate(merchandiseRequest.getAdmisionDate()))
                 .userId(merchandiseRequest.getUserId())
-                .productName(merchandiseRequest.getProductName())
+                .productName(merchandiseRequest.getProductName().toLowerCase(Locale.ROOT).trim())
                 .build();
     }
 
