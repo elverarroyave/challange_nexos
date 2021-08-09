@@ -9,4 +9,6 @@ public interface MerchandiseService {
     Merchandise save(MerchandiseProductDetail merchandiseToCreateCmd);
 
     Merchandise update(@NotNull Long id, @NotNull MerchandiseProductDetail merchandiseProductDetail);
+
+    void delete(@NotNull Long id, Long userId);
 }

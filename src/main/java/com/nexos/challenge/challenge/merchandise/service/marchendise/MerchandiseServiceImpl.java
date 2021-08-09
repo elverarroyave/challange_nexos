@@ -1,5 +1,6 @@
 package com.nexos.challenge.challenge.merchandise.service.marchendise;
 
+import com.nexos.challenge.challenge.config.exeption.BadRequestExeption;
 import com.nexos.challenge.challenge.merchandise.model.Merchandise;
 import com.nexos.challenge.challenge.merchandise.model.MerchandiseModificationRecord;
 import com.nexos.challenge.challenge.merchandise.model.Product;
@@ -78,13 +79,29 @@ public class MerchandiseServiceImpl implements MerchandiseService{
         Merchandise merchandiseUpdated = merchandiseGateway.update(merchandiseToUpdate);
 
         MerchandiseModificationRecord merchandiseModificationRecord = MerchandiseModificationRecord.builder()
-                .merchandise(merchandiseUpdated)
-                .user(merchandiseToUpdate.getUser())
-                .updateDate(merchandiseToUpdate.getUpdateDate())
+                .merchandiseId(id)
+                .userId(merchandiseUpdated.getUser().getId())
                 .build();
 
         modificationRecordGateway.save(merchandiseModificationRecord);
 
         return merchandiseToUpdate;
     }
+
+    @Override
+    public void delete(Long id, Long userId) {
+
+        Merchandise merchandise = merchandiseGateway.findById(id);
+
+        //Validacion usuario para eliminar mercnacia
+        if(userId != merchandise.getUser().getId()){
+            throw new BadRequestExeption("Usuario no autorizado para eliminar pedido");
+        }
+
+        modificationRecordGateway.deleteRecordinMerchandise(id);
+
+        merchandiseGateway.deleteById(id);
+    }
+
+
 }

@@ -21,17 +21,9 @@ public class MerchandiseModificationRecord {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    private Long userId;
 
-    @OneToOne(
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "MER_ID")
-    private Merchandise merchandise;
+    private Long merchandiseId;
 
     private LocalDate updateDate;
 }

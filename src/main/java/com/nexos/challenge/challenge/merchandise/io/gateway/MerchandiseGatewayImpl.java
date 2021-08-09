@@ -37,4 +37,9 @@ public class MerchandiseGatewayImpl implements MerchandiseGateway {
                 .orElseThrow(() -> new NotFoundExeption("Mercancia con id: " + id  + "no encontrada en la base de datos."));
         return merchandiseFound;
     }
+
+    @Override
+    public void deleteById(Long id) {
+        merchandiseRepository.deleteById(id);
+    }
 }

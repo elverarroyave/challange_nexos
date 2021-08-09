@@ -6,4 +6,6 @@ import javax.validation.constraints.NotNull;
 
 public interface ModificationRecordGateway {
     MerchandiseModificationRecord save(@NotNull MerchandiseModificationRecord merchandiseModificationRecord);
+
+    void deleteRecordinMerchandise(Long id);
 }

@@ -11,4 +11,8 @@ public interface MerchandiseGateway {
     Merchandise update(@NotNull Merchandise merchandiseToUpdate);
 
     Merchandise findById(@NotNull Long id);
+
+    void deleteById(@NotNull Long id);
+
+
 }

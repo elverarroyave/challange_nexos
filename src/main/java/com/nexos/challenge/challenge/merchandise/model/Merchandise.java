@@ -32,7 +32,8 @@ public class Merchandise {
     private User user;
 
     @OneToOne(
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            orphanRemoval = true
     )
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;

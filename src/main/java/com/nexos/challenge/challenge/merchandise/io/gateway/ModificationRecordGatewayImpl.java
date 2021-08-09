@@ -6,6 +6,8 @@ import com.nexos.challenge.challenge.merchandise.service.marchendise.Modificatio
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+
 @Repository
 public class ModificationRecordGatewayImpl implements ModificationRecordGateway {
 
@@ -14,6 +16,12 @@ public class ModificationRecordGatewayImpl implements ModificationRecordGateway 
 
     @Override
     public MerchandiseModificationRecord save(MerchandiseModificationRecord merchandiseModificationRecord) {
+        merchandiseModificationRecord.setUpdateDate(LocalDate.now());
         return modificationRecordRepository.save(merchandiseModificationRecord);
+    }
+
+    @Override
+    public void deleteRecordinMerchandise(Long id) {
+        modificationRecordRepository.deleteRecordinMerchandise(id);
     }
 }

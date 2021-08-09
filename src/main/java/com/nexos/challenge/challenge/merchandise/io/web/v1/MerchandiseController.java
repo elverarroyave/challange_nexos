@@ -46,4 +46,11 @@ public class MerchandiseController {
         Merchandise merchandiseUpdated = merchandiseService.update(id, MerchandiseRequest.toModelCmd(merchandiseToUpdate));
         return new ResponseEntity<>(new MessageResponse("Producto editado"), HttpStatus.NO_CONTENT);
     }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete a product by id.")
+    public ResponseEntity<MessageResponse> delete(@PathVariable Long id, @RequestParam Long userId){
+        merchandiseService.delete(id, userId);
+        return new ResponseEntity<>( new MessageResponse("Merchandise deleted successfully"), HttpStatus.NO_CONTENT);
+    }
 }
