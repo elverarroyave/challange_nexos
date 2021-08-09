@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class MerchandiseServiceImpl implements MerchandiseService{
 
     @Autowired
-    private MerchandiseGategay merchandiseGategay;
+    private MerchandiseGateway merchandiseGateway;
 
     @Autowired
     private ProductGategay productGategay;
@@ -45,7 +45,7 @@ public class MerchandiseServiceImpl implements MerchandiseService{
                 .user(userGateway.findById(productDetaill.getUserId()))
                 .build();
 
-        return merchandiseGategay.save(merchandiseToCreate);
+        return merchandiseGateway.save(merchandiseToCreate);
 
     }
 }
