@@ -1,6 +1,7 @@
 package com.nexos.challenge.challenge.merchandise.io.web.v1;
 
 
+import com.nexos.challenge.challenge.config.MessageResponse;
 import com.nexos.challenge.challenge.merchandise.io.web.v1.model.MerchandiseRequest;
 import com.nexos.challenge.challenge.merchandise.model.Merchandise;
 import com.nexos.challenge.challenge.merchandise.service.marchendise.MerchandiseService;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +24,6 @@ import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 @Api(tags = "Merchandise", value="Merchandise")
 @CrossOrigin(origins = "http://localhost:4200")
 public class MerchandiseController {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private MerchandiseService merchandiseService;
@@ -36,5 +37,13 @@ public class MerchandiseController {
                 .buildAndExpand(merchandiseCreated.getId()).toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @PutMapping("/{id}")
+    @ApiOperation(value = "Updating a product")
+    public ResponseEntity<MessageResponse> update(@PathVariable Long id,
+                                                  @RequestBody @Valid MerchandiseRequest merchandiseToUpdate){
+        Merchandise merchandiseUpdated = merchandiseService.update(id, MerchandiseRequest.toModelCmd(merchandiseToUpdate));
+        return new ResponseEntity<>(new MessageResponse("Producto editado"), HttpStatus.NO_CONTENT);
     }
 }

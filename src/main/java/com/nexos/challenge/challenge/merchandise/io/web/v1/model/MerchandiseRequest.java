@@ -1,10 +1,9 @@
 package com.nexos.challenge.challenge.merchandise.io.web.v1.model;
 
-import com.nexos.challenge.challenge.merchandise.service.marchendise.model.MerchandiseProductDetaill;
+import com.nexos.challenge.challenge.merchandise.service.marchendise.model.MerchandiseProductDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.NumberFormat;
 
 import java.time.LocalDate;
 import java.util.Locale;
@@ -22,8 +21,8 @@ public class MerchandiseRequest {
 
     private String productName;
 
-    public static MerchandiseProductDetaill toModelCmd(MerchandiseRequest merchandiseRequest){
-        return MerchandiseProductDetaill.builder()
+    public static MerchandiseProductDetail toModelCmd(MerchandiseRequest merchandiseRequest){
+        return MerchandiseProductDetail.builder()
                 .amount(merchandiseRequest.getAmount())
                 .admisionDate(formatDate(merchandiseRequest.getAdmisionDate()))
                 .userId(merchandiseRequest.getUserId())

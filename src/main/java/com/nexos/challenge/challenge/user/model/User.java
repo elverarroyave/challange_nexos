@@ -1,5 +1,6 @@
 package com.nexos.challenge.challenge.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nexos.challenge.challenge.merchandise.model.Merchandise;
 import com.nexos.challenge.challenge.role.model.Role;
 import lombok.*;
@@ -10,7 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Builder(toBuilder = true)
 @Generated
 @AllArgsConstructor
@@ -45,6 +47,7 @@ public class User {
             cascade = CascadeType.ALL,
             mappedBy = "user"
     )
+    @JsonIgnore
     private List<Merchandise> merchandises;
 
     public User(String name, int age, LocalDate entryDateToCompany) {

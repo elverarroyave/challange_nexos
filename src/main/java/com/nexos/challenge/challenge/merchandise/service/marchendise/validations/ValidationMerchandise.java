@@ -2,8 +2,8 @@ package com.nexos.challenge.challenge.merchandise.service.marchendise.validation
 
 import com.nexos.challenge.challenge.config.exeption.BadRequestExeption;
 import com.nexos.challenge.challenge.config.exeption.UnauthorizedUser;
-import com.nexos.challenge.challenge.merchandise.service.marchendise.model.MerchandiseProductDetaill;
-import com.nexos.challenge.challenge.merchandise.service.product.ProductGategay;
+import com.nexos.challenge.challenge.merchandise.service.marchendise.model.MerchandiseProductDetail;
+import com.nexos.challenge.challenge.merchandise.service.product.ProductGateway;
 import com.nexos.challenge.challenge.user.service.UserGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,16 +18,16 @@ public class ValidationMerchandise {
     private UserGateway userGateway;
 
     @Autowired
-    private ProductGategay productGategay;
+    private ProductGateway productGateway;
 
-    public void validations(MerchandiseProductDetaill productDetaill){
+    public void validations(MerchandiseProductDetail productDetaill){
         //Existencia de usuario
         if(!userGateway.verifyUserExits(productDetaill.getUserId()).isPresent()){
             throw new UnauthorizedUser("Usuario no registrado y sin autorizacion");
         }
 
         //Nombre unico de mercancia
-        if(productGategay.findByName(productDetaill.getProductName().toLowerCase(Locale.ROOT).trim()).isPresent()){
+        if(productGateway.findByName(productDetaill.getProductName().toLowerCase(Locale.ROOT).trim()).isPresent()){
             throw new BadRequestExeption("Mercancia con este nombre ya existe.");
         }
 

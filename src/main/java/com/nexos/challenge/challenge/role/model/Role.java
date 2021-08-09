@@ -4,7 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Generated
 @Builder(toBuilder = true)
 @AllArgsConstructor

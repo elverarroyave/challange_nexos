@@ -1,5 +1,6 @@
 package com.nexos.challenge.challenge.merchandise.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nexos.challenge.challenge.user.model.User;
 import lombok.*;
 
@@ -8,32 +9,29 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@Generated
 @Builder(toBuilder = true)
+@Generated
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "MERCHANDISE")
-public class Merchandise {
+@Entity(name = "MerchandiseModificationRecord")
+@Table(name = "MERCHANDISE_MODIFICATION_RECORD")
+public class MerchandiseModificationRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "MER_ID")
     private Long id;
 
-    @Column(name = "ADMISION_DATE", nullable = false)
-    private LocalDate admisionDate;
-
-    @Column(name = "UPDATE_DATE")
-    private LocalDate updateDate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(name = "USER_ID")
     private User user;
 
     @OneToOne(
             fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "PRODUCT_ID")
-    private Product product;
+    @JoinColumn(name = "MER_ID")
+    private Merchandise merchandise;
+
+    private LocalDate updateDate;
 }

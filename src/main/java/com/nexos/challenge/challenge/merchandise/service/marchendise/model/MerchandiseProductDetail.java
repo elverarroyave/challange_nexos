@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-public class MerchandiseProductDetaill {
+public class MerchandiseProductDetail {
 
     private int amount;
 

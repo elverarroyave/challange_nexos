@@ -1,14 +1,17 @@
 package com.nexos.challenge.challenge.merchandise.service.marchendise;
 
-import com.nexos.challenge.challenge.config.exeption.UnauthorizedUser;
 import com.nexos.challenge.challenge.merchandise.model.Merchandise;
+import com.nexos.challenge.challenge.merchandise.model.MerchandiseModificationRecord;
 import com.nexos.challenge.challenge.merchandise.model.Product;
-import com.nexos.challenge.challenge.merchandise.service.marchendise.model.MerchandiseProductDetaill;
+import com.nexos.challenge.challenge.merchandise.service.marchendise.model.MerchandiseProductDetail;
 import com.nexos.challenge.challenge.merchandise.service.marchendise.validations.ValidationMerchandise;
-import com.nexos.challenge.challenge.merchandise.service.product.ProductGategay;
+import com.nexos.challenge.challenge.merchandise.service.product.ProductGateway;
 import com.nexos.challenge.challenge.user.service.UserGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.validation.constraints.NotNull;
+import java.util.Optional;
 
 @Service
 public class MerchandiseServiceImpl implements MerchandiseService{
@@ -17,7 +20,7 @@ public class MerchandiseServiceImpl implements MerchandiseService{
     private MerchandiseGateway merchandiseGateway;
 
     @Autowired
-    private ProductGategay productGategay;
+    private ProductGateway productGateway;
 
     @Autowired
     private UserGateway userGateway;
@@ -25,27 +28,63 @@ public class MerchandiseServiceImpl implements MerchandiseService{
     @Autowired
     private ValidationMerchandise validationMerchandise;
 
-    @Override
-    public Merchandise save(MerchandiseProductDetaill productDetaill) {
+    @Autowired
+    private ModificationRecordGateway modificationRecordGateway;
 
-        validationMerchandise.validations(productDetaill);
+    @Override
+    public Merchandise save(MerchandiseProductDetail productDetail) {
+
+        validationMerchandise.validations(productDetail);
 
         //Creamos el producto de la mercancia
         Product productToCrate = new Product(
-            productDetaill.getProductName(),
-            productDetaill.getAmount()
+            productDetail.getProductName(),
+            productDetail.getAmount()
         );
 
-        productGategay.create(productToCrate);
+        productGateway.create(productToCrate);
 
         //Creamos la venta
         Merchandise merchandiseToCreate = Merchandise.builder()
-                .admisionDate(productDetaill.getAdmisionDate())
+                .admisionDate(productDetail.getAdmisionDate())
                 .product(productToCrate)
-                .user(userGateway.findById(productDetaill.getUserId()))
+                .user(userGateway.findById(productDetail.getUserId()))
                 .build();
 
         return merchandiseGateway.save(merchandiseToCreate);
 
+    }
+
+    @Override
+    public Merchandise update(@NotNull Long id, @NotNull MerchandiseProductDetail productDetail) {
+
+        validationMerchandise.validations(productDetail);
+
+        Merchandise merchandiseInDataBase = merchandiseGateway.findById(id);
+
+        Product productToUpdate = merchandiseInDataBase.getProduct();
+
+        productToUpdate.setName(productDetail.getProductName());
+        productToUpdate.setAmount(productDetail.getAmount());
+
+        productGateway.create(productToUpdate);
+
+        Merchandise merchandiseToUpdate = merchandiseInDataBase.toBuilder()
+                .admisionDate(productDetail.getAdmisionDate())
+                .product(productToUpdate)
+                .user(userGateway.findById(productDetail.getUserId()))
+                .build();
+
+        Merchandise merchandiseUpdated = merchandiseGateway.update(merchandiseToUpdate);
+
+        MerchandiseModificationRecord merchandiseModificationRecord = MerchandiseModificationRecord.builder()
+                .merchandise(merchandiseUpdated)
+                .user(merchandiseToUpdate.getUser())
+                .updateDate(merchandiseToUpdate.getUpdateDate())
+                .build();
+
+        modificationRecordGateway.save(merchandiseModificationRecord);
+
+        return merchandiseToUpdate;
     }
 }

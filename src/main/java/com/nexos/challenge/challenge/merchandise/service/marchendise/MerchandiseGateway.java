@@ -1,9 +1,14 @@
 package com.nexos.challenge.challenge.merchandise.service.marchendise;
 
 import com.nexos.challenge.challenge.merchandise.model.Merchandise;
-import com.sun.istack.NotNull;
+
+import javax.validation.constraints.NotNull;
 
 public interface MerchandiseGateway {
 
-    Merchandise save(@NotNull  Merchandise merchandiseToCreate);
+    Merchandise save(@NotNull Merchandise merchandiseToCreate);
+
+    Merchandise update(@NotNull Merchandise merchandiseToUpdate);
+
+    Merchandise findById(@NotNull Long id);
 }

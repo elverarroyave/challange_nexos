@@ -5,7 +5,7 @@ import com.sun.istack.NotNull;
 
 import java.util.Optional;
 
-public interface ProductGategay {
+public interface ProductGateway {
     Product create(@NotNull Product productToCreate);
 
     Optional<Product> findByName(@NotNull String name);
